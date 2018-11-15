@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <section class="container">
     <ReactiveBase
       app="gitxplore-app"
       credentials="4oaS4Srzi:f6966181-1eb4-443c-8e0e-b7f38e7bc316"
@@ -30,14 +30,21 @@
         </div>
       </div>
 
-      <div class="">
+      <div class="flex row-reverse app-container">
+      <div class="results-container">
+        <div class="result-list">
         <ReactiveList
           componentId="SearchResult"
           dataField="name.raw"
           :pagination="true"
           :from="0"
           :size="5"
-          class="col-sm-3"
+          :innerClass= "{
+              'list': 'result-list-container',
+              'pagination': 'result-list-pagination',
+              'resultsInfo': 'result-list-info',
+              'poweredBy': 'powered-by'
+          }"
         >
           <div slot="onData" slot-scope="{ item }">
             <div key="{{item.name}}" class="result-item">
@@ -90,8 +97,10 @@
           </div>
         </ReactiveList>
       </div>
-    </ReactiveBase>
+    </div>
   </div>
+    </ReactiveBase>
+  </section>
 </template>
 
 <script>
@@ -104,7 +113,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style >
 /* containers */
 .container {
   width: 100%;
