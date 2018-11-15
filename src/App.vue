@@ -82,7 +82,7 @@ body {
 }
 
 .title {
-  color: white;
+  color: black;
 	font-family: 'Monoton', cursive;
 	font-size: 2rem;
 	text-align: center;
