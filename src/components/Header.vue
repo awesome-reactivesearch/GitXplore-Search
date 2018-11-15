@@ -6,7 +6,7 @@
         Toggle Filters
       </div>
        	<div v-bind:class="[!visible ? 'hidden' : '', 'flex column filters-container']">
-          <div class="child m10">
+          <div class="m10">
             <MultiDropdownList
               componentId="language"
               dataField="language.raw"
@@ -15,7 +15,7 @@
               filterLabel="Language"
             />
           </div>
-          <div class="child m10">
+          <div class="m10">
             <MultiDropdownList
               componentId="topics"
               dataField="topics.raw"
@@ -51,7 +51,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .navbar.active {
   height: 100vh;
 }
@@ -99,6 +99,10 @@ export default {
   flex-direction: column;
 }
 
+
+.m10 {
+  margin: 10px;
+}
 
 .filters-container {
   max-height: calc(100vh - 100px);

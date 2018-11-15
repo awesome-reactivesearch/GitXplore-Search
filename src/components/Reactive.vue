@@ -6,31 +6,32 @@
       type="gitxplore-latest"
     >
       <div class="flex row-reverse app-container">
-        <Header :setTopics="setTopics" :currentTopics="currentTopics"/>
+        <header :setTopics="setTopics" :currentTopics="currentTopics" />
         <div class="results-container">
+          <DataSearch
+            componentId="repo"
+            filterLabel="Search"
+            :dataField="[
+              'name',
+              'description',
+              'name.raw',
+              'fullname',
+              'owner',
+              'topics'
+            ]"
+            placeholder="Search Repos"
+            iconPosition="left"
+            :autosuggest="true"
+            URLParams
+            class="data-search-container results-container"
+            :innerClass="{
+              input: 'search-input'
+            }"
+          />
           <div class="result-list">
-            <DataSearch
-              componentId="repo"
-              filterLabel="Search"
-              :dataField="[
-                'name',
-                'description',
-                'name.raw',
-                'fullname',
-                'owner',
-                'topics'
-              ]"
-              placeholder="Search Repos"
-              iconPosition="left"
-              :autosuggest="true"
-              URLParams
-              className="data-search-container results-container"
-              :innerClass="{
-                input: 'search-input'
-              }"
-            />
+            <SelectedFilters class="m1" />
             <ReactiveList
-              componentId="SearchResult"
+              componentId="results"
               dataField="name.raw"
               :pagination="true"
               :from="0"
@@ -92,17 +93,19 @@
                 }
               ]"
             >
+              <div slot="onResultStats" slot-scope="{ results, time }">
+                <div class="flex justify-end">
+                  <h5>
+                    {{ results }} Results Found In {{ time }} Milliseconds
+                  </h5>
+                </div>
+              </div>
               <div slot="onData" slot-scope="{ item }">
                 <div key="{{item.name}}" class="result-item">
                   <div
                     class="flex justify-center align-center result-card-header"
                   >
-                    <img
-                      class="avatar"
-                      :src="item.avatar"
-                      alt="User avatar"
-                      width="40"
-                    />
+                    <img class="avatar" :src="item.avatar" alt="User avatar" />
                     <a
                       class="link"
                       href="{item.url}"
@@ -121,6 +124,11 @@
                       v-for="(tag, index) in item.topics"
                       :key="index"
                       class="topic"
+                      v-bind:class="[
+                        currentTopics.includes(item) ? 'active' : '',
+                        'topic'
+                      ]"
+                      @Click="toggleTopic(item);"
                     >
                       {{ tag }}
                     </span>
@@ -156,40 +164,43 @@
 </template>
 
 <script>
-
-import Header from "./Header.vue"
+import Header from "./Header.vue";
 
 export default {
   name: "Reactive",
-  components:{
+  components: {
     Header
   },
   props: {},
-  data(){
-    return{
+  data() {
+    return {
       currentTopics: []
-    }
+    };
   },
 
-  methods:{
-    setTopics(){
-        this.currentTopics = this.currentTopics || []
+  methods: {
+    setTopics() {
+      this.currentTopics = this.currentTopics || [];
     },
-    toggleTopic(topic){
+    toggleTopic(topic) {
+      const currentTopics = this.currentTopics;
+      const nextState = currentTopics.includes(topic)
+        ? currentTopics.filter(item => item !== topic)
+        : currentTopics.concat(topic);
 
-        const currentTopics  = this.currentTopics;
-        const nextState = currentTopics.includes(topic)
-          ? currentTopics.filter(item => item !== topic)
-          : currentTopics.concat(topic);
-        
-        this.currentTopics = nextState;
-
+      this.currentTopics = nextState;
     }
   }
 };
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Raleway", "Arial", sans-serif;
+}
+
 .container {
   width: 100%;
   height: 100vh;
@@ -237,16 +248,8 @@ export default {
   display: none;
 }
 
-.title {
-  color: white;
-  font-family: "Monoton", cursive;
-  font-size: 2rem;
-  text-align: center;
-}
-
-/* components */
 .avatar {
-  width: 70px;
+  width: 40px;
 }
 
 .btn {
@@ -435,10 +438,6 @@ export default {
     margin-top: 20px;
     width: calc(100% - 280px);
     right: 20px;
-  }
-
-  .hidden {
-    display: none;
   }
 }
 
