@@ -38,13 +38,60 @@
           dataField="name.raw"
           :pagination="true"
           :from="0"
-          :size="5"
+          :size="6"
           :innerClass= "{
-              'list': 'result-list-container',
-              'pagination': 'result-list-pagination',
-              'resultsInfo': 'result-list-info',
-              'poweredBy': 'powered-by'
+              list: 'result-list-container',
+              pagination: 'result-list-pagination',
+              resultsInfo: 'result-list-info',
+              poweredBy: 'powered-by'
           }"
+          :sortOptions="[
+            {
+              label: 'Best Match',
+              dataField: '_score',
+              sortBy: 'desc'
+            },
+            {
+              label: 'Most Stars',
+              dataField: 'stars',
+              sortBy: 'desc'
+            },
+            {
+              label: 'Fewest Stars',
+              dataField: 'stars',
+              sortBy: 'asc'
+            },
+            {
+              label: 'Most Forks',
+              dataField: 'forks',
+              sortBy: 'desc'
+            },
+            {
+              label: 'Fewest Forks',
+              dataField: 'forks',
+              sortBy: 'asc'
+            },
+            {
+              label: 'A to Z',
+              dataField: 'owner.raw',
+              sortBy: 'asc'
+            },
+            {
+              label: 'Z to A',
+              dataField: 'owner.raw',
+              sortBy: 'desc'
+            },
+            {
+              label: 'Recently Updated',
+              dataField: 'pushed',
+              sortBy: 'desc'
+            },
+            {
+              label: 'Least Recently Updated',
+              dataField: 'pushed',
+              sortBy: 'asc'
+            }
+          ]"
         >
           <div slot="onData" slot-scope="{ item }">
             <div key="{{item.name}}" class="result-item">
@@ -69,9 +116,11 @@
               </div>
               <div class="m10-0">{{ item.description }}</div>
               <div class="flex wrap justify-center">
-                <span v-for="(tag, index) in item.topics" :key="index">
+
+                <span v-for="(tag, index) in item.topics" :key="index" class= "topic">
                   {{ tag }}
                 </span>
+
               </div>
               <div class="flex">
                 <div>
@@ -107,14 +156,12 @@
 export default {
   name: "Reactive",
   props: {
-    msg: String
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
-/* containers */
+
 .container {
   width: 100%;
   height: 100vh;
