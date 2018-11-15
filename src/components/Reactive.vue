@@ -5,163 +5,191 @@
       credentials="4oaS4Srzi:f6966181-1eb4-443c-8e0e-b7f38e7bc316"
       type="gitxplore-latest"
     >
-      <div class="navbar">
-      <div class= "flex column filters-container">
-          <div class="child m10">
-            <MultiDropdownList
-              componentId="language"
-              dataField="language.raw"
-              placeholder="Select languages"
-              title="Language"
-              filterLabel="Language"
+      <div class="flex row-reverse app-container">
+        <Header :setTopics="setTopics" :currentTopics="currentTopics"/>
+        <div class="results-container">
+          <div class="result-list">
+            <DataSearch
+              componentId="repo"
+              filterLabel="Search"
+              :dataField="[
+                'name',
+                'description',
+                'name.raw',
+                'fullname',
+                'owner',
+                'topics'
+              ]"
+              placeholder="Search Repos"
+              iconPosition="left"
+              :autosuggest="true"
+              URLParams
+              className="data-search-container results-container"
+              :innerClass="{
+                input: 'search-input'
+              }"
             />
-          </div>
-          <div class="child m10">
-            <MultiDropdownList
-              componentId="topics"
-              dataField="topics.raw"
-              placeholder="Select topics"
-              title="Repo Topics"
-              filterLabel="Topics"
-              :size="1000"
-              queryFormat="and"
-            />
+            <ReactiveList
+              componentId="SearchResult"
+              dataField="name.raw"
+              :pagination="true"
+              :from="0"
+              :size="6"
+              :innerClass="{
+                list: 'result-list-container',
+                pagination: 'result-list-pagination',
+                resultsInfo: 'result-list-info',
+                poweredBy: 'powered-by'
+              }"
+              :react="{
+                and: ['language', 'topics', 'repo']
+              }"
+              :sortOptions="[
+                {
+                  label: 'Best Match',
+                  dataField: '_score',
+                  sortBy: 'desc'
+                },
+                {
+                  label: 'Most Stars',
+                  dataField: 'stars',
+                  sortBy: 'desc'
+                },
+                {
+                  label: 'Fewest Stars',
+                  dataField: 'stars',
+                  sortBy: 'asc'
+                },
+                {
+                  label: 'Most Forks',
+                  dataField: 'forks',
+                  sortBy: 'desc'
+                },
+                {
+                  label: 'Fewest Forks',
+                  dataField: 'forks',
+                  sortBy: 'asc'
+                },
+                {
+                  label: 'A to Z',
+                  dataField: 'owner.raw',
+                  sortBy: 'asc'
+                },
+                {
+                  label: 'Z to A',
+                  dataField: 'owner.raw',
+                  sortBy: 'desc'
+                },
+                {
+                  label: 'Recently Updated',
+                  dataField: 'pushed',
+                  sortBy: 'desc'
+                },
+                {
+                  label: 'Least Recently Updated',
+                  dataField: 'pushed',
+                  sortBy: 'asc'
+                }
+              ]"
+            >
+              <div slot="onData" slot-scope="{ item }">
+                <div key="{{item.name}}" class="result-item">
+                  <div
+                    class="flex justify-center align-center result-card-header"
+                  >
+                    <img
+                      class="avatar"
+                      :src="item.avatar"
+                      alt="User avatar"
+                      width="40"
+                    />
+                    <a
+                      class="link"
+                      href="{item.url}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div class="flex wrap">
+                        <div>{{ item.owner }}/</div>
+                        <div>{{ item.name }}</div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="m10-0">{{ item.description }}</div>
+                  <div class="flex wrap justify-center">
+                    <span
+                      v-for="(tag, index) in item.topics"
+                      :key="index"
+                      class="topic"
+                    >
+                      {{ tag }}
+                    </span>
+                  </div>
+                  <div class="flex">
+                    <div>
+                      <div class="btn card-btn">
+                        <font-awesome-icon icon="star" />
+                        {{ item.stars }}
+                      </div>
+                    </div>
+                    <div>
+                      <div class="btn card-btn">
+                        <font-awesome-icon icon="code-branch" />
+                        {{ item.forks }}
+                      </div>
+                    </div>
+                    <div>
+                      <div class="btn card-btn">
+                        <font-awesome-icon icon="eye" />
+                        {{ item.watchers }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ReactiveList>
           </div>
         </div>
       </div>
-
-      <div class="flex row-reverse app-container">
-      <div class="results-container">
-        <div class="result-list">
-        <ReactiveList
-          componentId="SearchResult"
-          dataField="name.raw"
-          :pagination="true"
-          :from="0"
-          :size="6"
-          :innerClass= "{
-              list: 'result-list-container',
-              pagination: 'result-list-pagination',
-              resultsInfo: 'result-list-info',
-              poweredBy: 'powered-by'
-          }"
-          :sortOptions="[
-            {
-              label: 'Best Match',
-              dataField: '_score',
-              sortBy: 'desc'
-            },
-            {
-              label: 'Most Stars',
-              dataField: 'stars',
-              sortBy: 'desc'
-            },
-            {
-              label: 'Fewest Stars',
-              dataField: 'stars',
-              sortBy: 'asc'
-            },
-            {
-              label: 'Most Forks',
-              dataField: 'forks',
-              sortBy: 'desc'
-            },
-            {
-              label: 'Fewest Forks',
-              dataField: 'forks',
-              sortBy: 'asc'
-            },
-            {
-              label: 'A to Z',
-              dataField: 'owner.raw',
-              sortBy: 'asc'
-            },
-            {
-              label: 'Z to A',
-              dataField: 'owner.raw',
-              sortBy: 'desc'
-            },
-            {
-              label: 'Recently Updated',
-              dataField: 'pushed',
-              sortBy: 'desc'
-            },
-            {
-              label: 'Least Recently Updated',
-              dataField: 'pushed',
-              sortBy: 'asc'
-            }
-          ]"
-        >
-          <div slot="onData" slot-scope="{ item }">
-            <div key="{{item.name}}" class="result-item">
-              <div class="flex justify-center align-center result-card-header">
-                <img
-                  class="avatar"
-                  :src="item.avatar"
-                  alt="User avatar"
-                  width="40"
-                />
-                <a
-                  class="link"
-                  href="{item.url}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="flex wrap">
-                    <div>{{ item.owner }}/</div>
-                    <div>{{ item.name }}</div>
-                  </div>
-                </a>
-              </div>
-              <div class="m10-0">{{ item.description }}</div>
-              <div class="flex wrap justify-center">
-
-                <span v-for="(tag, index) in item.topics" :key="index" class= "topic">
-                  {{ tag }}
-                </span>
-
-              </div>
-              <div class="flex">
-                <div>
-                  <div class="btn card-btn">
-                    <font-awesome-icon icon="star" />
-                    {{ item.stars }}
-                  </div>
-                </div>
-                <div>
-                  <div class="btn card-btn">
-                    <font-awesome-icon icon="code-branch" />
-                    {{ item.forks }}
-                  </div>
-                </div>
-                <div>
-                  <div class="btn card-btn">
-                    <font-awesome-icon icon="eye" />
-                    {{ item.watchers }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ReactiveList>
-      </div>
-    </div>
-  </div>
     </ReactiveBase>
   </section>
 </template>
 
 <script>
+
+import Header from "./Header.vue"
+
 export default {
   name: "Reactive",
-  props: {
+  components:{
+    Header
+  },
+  props: {},
+  data(){
+    return{
+      currentTopics: []
+    }
+  },
+
+  methods:{
+    setTopics(){
+        this.currentTopics = this.currentTopics || []
+    },
+    toggleTopic(topic){
+
+        const currentTopics  = this.currentTopics;
+        const nextState = currentTopics.includes(topic)
+          ? currentTopics.filter(item => item !== topic)
+          : currentTopics.concat(topic);
+        
+        this.currentTopics = nextState;
+
+    }
   }
 };
 </script>
 
-<style >
-
+<style>
 .container {
   width: 100%;
   height: 100vh;
@@ -209,17 +237,6 @@ export default {
   display: none;
 }
 
-/* header styles */
-.navbar {
-  background: mediumseagreen;
-  left: 0;
-  width: 400px;
-  padding: 1rem;
-  height: 100vh;
-  position: fixed;
-  z-index: 3;
-}
-
 .title {
   color: white;
   font-family: "Monoton", cursive;
@@ -229,8 +246,7 @@ export default {
 
 /* components */
 .avatar {
-  height: 50px;
-  border-radius: 50%;
+  width: 70px;
 }
 
 .btn {
@@ -419,10 +435,6 @@ export default {
     margin-top: 20px;
     width: calc(100% - 280px);
     right: 20px;
-  }
-
-  .toggle-btn {
-    display: block;
   }
 
   .hidden {
