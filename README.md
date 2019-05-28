@@ -7,15 +7,20 @@ Live Application - [gitxplore](https://codesandbox.io/s/54l2m5rqxl)
 
 Install dependencies
 ```sh
-yarn install
+npm install
 ```
 
 Compiles and hot-reloads for development
 ```
-yarn serve
+npm run serve
 ```
 
 Build for production
 ```
-yarn build
+npm run build
+```
+
+Lint your code
+```
+npm run lint
 ```
