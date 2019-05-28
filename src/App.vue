@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <Reactive/>
-  </div>
+  <div><Reactive /></div>
 </template>
 
 <script>
@@ -16,16 +14,16 @@ export default {
 </script>
 
 <style>
-
 body {
   margin: 0;
   padding: 0;
   font-family: "Raleway", "Arial", sans-serif;
+  background: #f3f6f7;
 }
 /* containers */
 .container {
   width: 100%;
-	height: 100vh;
+  height: 100vh;
 }
 
 .data-search-container {
@@ -40,11 +38,11 @@ body {
 .filters-container {
   max-height: calc(100vh - 100px);
   height: 100%;
-	overflow-y: auto;
+  overflow-y: auto;
 }
 
 .results-container {
-  width: calc(100% - 400px);
+  width: calc(100% - 370px);
 }
 
 .result-list {
@@ -72,87 +70,84 @@ body {
 
 /* header styles */
 .navbar {
-  background: #f5f5f5;
-	left: 0;
-	width: 400px;
-	padding: 1rem;
-	height: 100vh;
+  background: #182636;
+  left: 0;
+  width: 370px;
+  height: 100vh;
   position: fixed;
   z-index: 3;
 }
 
 .title {
   color: black;
-	font-family: 'Monoton', cursive;
-	font-size: 2rem;
-	text-align: center;
+  background: #23354c;
+  font-size: 2rem;
+  text-align: center;
 }
 
 /* components */
 .avatar {
   height: 50px;
-	border-radius: 50%;
 }
 
 .btn {
   cursor: pointer;
   margin: 5px;
   padding: 5px;
-	text-align: center;
-  border-radius: 4px;
+  text-align: center;
 }
 
 .card-btn {
   background: #eff3f6;
-  min-width: 70px;
+  min-width: 100px;
 }
 
 .card-btn:hover {
-  background: #008000;
-	color: white;
+  background: #04d07d;
+  color: white;
 }
 
 .link {
   cursor: pointer;
-	color: mediumseagreen;
-	text-decoration: none;
-	font-weight: bold;
-	margin-left: 20px;
-	font-size: 1.2rem;
+  color: mediumseagreen;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 20px;
+  font-size: 1.2rem;
 }
 
 .topic {
-  background: mediumseagreen;
-	margin: 3px;
-	padding: 4px;
-	color: white;
-	font-weight: bold;
-	cursor: pointer;
-	border-radius: 4px;
+  background: #06f393;
+  margin: 3px;
+  padding: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 55px;
 }
 
 .topic:hover {
-  background: #008000;
+  background: #04d07d;
 }
 
 .topic.active {
-  background: #008000;
+  background: #04d07d;
 }
 
 .toggle-btn {
-  color: white;
-	border: 1px solid white;
-	display: none;
-	max-width: 200px;
-	font-size: 1.3rem;
-	align-self: center;
-	padding: 10px;
-	margin-top: 10px;
+  color: #6a6969;
+  border: 1px solid #6a6969;
+  display: none;
+  max-width: 200px;
+  font-size: 1.3rem;
+  align-self: center;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .toggle-btn:hover {
-  background: white;
-	color: mediumseagreen;
+  color: #918f8f;
+  border: 1px solid #918f8f;
 }
 
 .range-label {
@@ -161,36 +156,23 @@ body {
 
 .result-item {
   padding: 20px 0;
-	margin: 15px;
-	padding: 25px;
-	border: 1px solid #eee;
-	flex-basis: 400px;
-	max-width: 400px;
-	min-height: 300px;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-	font-size: 14px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
+  margin: 15px;
+  padding: 25px;
+  border: 1px solid #eee;
+  flex-basis: 400px;
+  width: 450px;
+  min-height: 300px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: white;
 }
 
 .result-item:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.search-input {
-  border: none;
-  border-bottom: 1px solid #ccc;
-  background: #fafafa;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  height: 50px;
-}
-
-.search-input:focus {
-  border-color: #008000;
-  box-shadow: 0 1px 0 0 #008000;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 /* flex layouts */
@@ -239,13 +221,13 @@ body {
 @media all and (max-width: 1280px) {
   .result-item {
     flex-basis: 350px;
-    max-width: 350px;
+    max-width: 375px;
   }
 
   .result-card-header {
     flex-direction: column;
   }
-  
+
   .result-card-header > div {
     justify-content: center;
     margin-top: 5px;
@@ -263,19 +245,19 @@ body {
 
   .navbar {
     width: 100%;
-		height: auto;
-		display: flex;
-		flex-direction: column;
+    height: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .navbar.active {
-		height: 100vh;
+    height: 100vh;
   }
 
   .results-container {
     width: 100%;
   }
-  
+
   .data-search-container {
     margin-top: 20px;
     width: calc(100% - 280px);
@@ -304,19 +286,18 @@ body {
 @media all and (max-width: 768px) {
   .data-search-container {
     width: 100%;
-		right: auto;
-		padding: 0 30px;
-		margin-top: 65px;
+    right: auto;
+    padding: 0 30px;
+    margin-top: 65px;
   }
 
   .search-input {
-    height: 42px;
+    height: 36px;
   }
 
   .title {
     text-align: center;
-		margin-bottom: 50px;
+    margin-bottom: 50px;
   }
 }
-
 </style>
