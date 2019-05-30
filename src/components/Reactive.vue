@@ -6,28 +6,31 @@
       type="gitxplore-latest"
     >
       <div class="flex row-reverse app-container">
-        <Header :setTopics="setTopics" :currentTopics="currentTopics"/>
+        <Navigation
+          @setTopics="setTopics"
+          v-bind:currentTopics="currentTopics"
+        />
         <div class="results-container">
-            <DataSearch
-              componentId="repo"
-              filterLabel="Search"
-              :dataField="[
-                'name',
-                'description',
-                'name.raw',
-                'fullname',
-                'owner',
-                'topics'
-              ]"
-              placeholder="Search Repos"
-              iconPosition="left"
-              :autosuggest="true"
-              URLParams
-              class="data-search-container results-container"
-              :innerClass="{
-                input: 'search-input'
-              }"
-            />
+          <DataSearch
+            componentId="repo"
+            filterLabel="Search"
+            :dataField="[
+              'name',
+              'description',
+              'name.raw',
+              'fullname',
+              'owner',
+              'topics'
+            ]"
+            placeholder="Search Repos"
+            iconPosition="left"
+            :autosuggest="true"
+            URLParams
+            class="data-search-container results-container"
+            :innerClass="{
+              input: 'search-input'
+            }"
+          />
           <div class="result-list">
             <SelectedFilters class="m1" />
             <ReactiveList
@@ -43,7 +46,7 @@
                 poweredBy: 'powered-by'
               }"
               :react="{
-                and: ['language', 'topics', 'repo']
+                and: ['language', 'topics', 'repo', 'stars', 'forks']
               }"
               :sortOptions="[
                 {
@@ -93,24 +96,18 @@
                 }
               ]"
             >
-              <div slot="onResultStats" slot-scope="{ results, time }">
-                  <div class="flex justify-end">
-                    <h5>{{ results }} Results Found In {{ time }} Milliseconds</h5>
-                  </div>
+              <div slot="onResultStats" slot-scope="{ total, time }">
+                <div class="flex justify-end">
+                  <h5>{{ total }} Results Found In {{ time }} Milliseconds</h5>
+                </div>
               </div>
-              <div slot="onData" slot-scope="{ item }">
+              <div slot="renderData" slot-scope="{ item }">
                 <div key="{{item.name}}" class="result-item">
-                  <div
-                    class="flex justify-center align-center result-card-header"
-                  >
-                    <img
-                      class="avatar"
-                      :src="item.avatar"
-                      alt="User avatar"
-                    />
+                  <div class="flex align-center result-card-header">
+                    <img class="avatar" :src="item.avatar" alt="User avatar" />
                     <a
                       class="link"
-                      href="{item.url}"
+                      :href="item.url"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -121,15 +118,17 @@
                     </a>
                   </div>
                   <div class="m10-0">{{ item.description }}</div>
-                  <div class="flex wrap justify-center">
+                  <div class="flex wrap">
                     <div
                       v-for="(tag, index) in item.topics.slice(0, 7)"
                       :key="index"
-                      class="topic"
-                      v-bind:class="[currentTopics.includes(item) ? 'active' : '', 'topic']"
-                      @Click="toggleTopic(item)"
+                      v-bind:class="[
+                        currentTopics.includes(tag) ? 'active' : '',
+                        'topic'
+                      ]"
+                      @click="toggleTopic(tag);"
                     >
-                      {{ tag }}
+                      #{{ tag }}
                     </div>
                   </div>
                   <div class="flex">
@@ -163,39 +162,38 @@
 </template>
 
 <script>
-
-import Header from "./Header.vue"
+import Navigation from "./Header.vue";
 
 export default {
   name: "Reactive",
-  components:{
-    Header
+  components: {
+    Navigation
   },
-  props: {},
-  data(){
-    return{
+  data() {
+    return {
       currentTopics: []
-    }
+    };
   },
 
-  methods:{
-    setTopics(){
-        this.currentTopics = this.currentTopics || []
+  methods: {
+    setTopics(currentTopics) {
+      this.currentTopics = currentTopics || [];
     },
-    toggleTopic(topic){
-
-        const currentTopics  = this.currentTopics;
-        const nextState = currentTopics.includes(topic)
-          ? currentTopics.filter(item => item !== topic)
-          : currentTopics.concat(topic);
-        
-        this.currentTopics = nextState;
-
+    toggleTopic(topic) {
+      const Topics = this.currentTopics;
+      const nextState = Topics.includes(topic)
+        ? Topics.filter(item => item !== topic)
+        : Topics.concat(topic);
+      this.currentTopics = nextState;
     }
   }
 };
 </script>
 
 <style>
-
+.search-input {
+  border: 1px solid #fff !important;
+  background-color: #ffffff !important;
+  height: 60px !important;
+}
 </style>
