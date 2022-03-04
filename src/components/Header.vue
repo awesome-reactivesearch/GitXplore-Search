@@ -12,21 +12,21 @@
       <div class="m10">
         <MultiDropdownList
           componentId="language"
-          dataField="language.raw"
+          dataField="language.keyword"
           placeholder="Select languages"
           title="Language"
           filterLabel="Language"
           :innerClass="{
             select: 'dropdown-select',
             title: 'inner-title',
-            list: 'dropdown-list'
+            list: 'dropdown-list',
           }"
         />
       </div>
       <div class="m10">
         <MultiDropdownList
           componentId="topics"
-          dataField="topics.raw"
+          dataField="topics.keyword"
           placeholder="Select topics"
           title="Repo Topics"
           filterLabel="Topics"
@@ -35,7 +35,7 @@
           :innerClass="{
             select: 'dropdown-select',
             title: 'inner-title',
-            list: 'dropdown-list'
+            list: 'dropdown-list',
           }"
           @valueChange="updateTopics"
           v-bind:defaultSelected="currentTopics"
@@ -43,24 +43,24 @@
       </div>
       <div class="m10">
         <RangeSlider
-          dataField="stars"
+          dataField="stars_num"
           componentId="stars"
           title="Repo Stars"
           :range="{
             start: 0,
-            end: 300000
+            end: 300000,
           }"
           :defaultSelected="{
             start: 0,
-            end: 300000
+            end: 300000,
           }"
           :innerClass="{
             title: 'inner-title',
-            slider: 'inner-slider-ui'
+            slider: 'inner-slider-ui',
           }"
           :rangeLabels="{
             start: '0',
-            end: '300K'
+            end: '300K',
           }"
         />
       </div>
@@ -71,19 +71,19 @@
           title="Repo Forks"
           :range="{
             start: 0,
-            end: 180000
+            end: 180000,
           }"
           :defaultSelected="{
             start: 0,
-            end: 180000
+            end: 180000,
           }"
           :innerClass="{
             title: 'inner-title',
-            slider: 'inner-slider-ui'
+            slider: 'inner-slider-ui',
           }"
           :rangeLabels="{
             start: '0',
-            end: '1800K'
+            end: '1800K',
           }"
         />
       </div>
@@ -95,11 +95,11 @@
 export default {
   name: "Navigation",
   props: {
-    currentTopics: Array
+    currentTopics: Array,
   },
   data() {
     return {
-      visible: false
+      visible: false,
     };
   },
   methods: {
@@ -108,8 +108,8 @@ export default {
     },
     updateTopics(value) {
       this.$emit("setTopics", value);
-    }
-  }
+    },
+  },
 };
 </script>
 

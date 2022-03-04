@@ -1,5 +1,7 @@
 <template>
-  <div><Reactive /></div>
+  <div id="app">
+    <Reactive />
+  </div>
 </template>
 
 <script>
@@ -8,8 +10,8 @@ import Reactive from "./components/Reactive.vue";
 export default {
   name: "app",
   components: {
-    Reactive
-  }
+    Reactive,
+  },
 };
 </script>
 
@@ -26,7 +28,7 @@ body {
   height: 100vh;
 }
 
-.data-search-container {
+.search-box {
   position: fixed;
   z-index: 3;
 }
@@ -46,7 +48,7 @@ body {
 }
 
 .result-list {
-  margin-top: 60px;
+  margin-top: 80px;
 }
 
 .result-list-container {
@@ -240,7 +242,9 @@ body {
   }
 
   .result-list {
-    margin-top: 170px;
+  }
+  .results-container {
+    width: 100%;
   }
 
   .navbar {
@@ -258,7 +262,7 @@ body {
     width: 100%;
   }
 
-  .data-search-container {
+  .search-box {
     margin-top: 20px;
     width: calc(100% - 280px);
     right: 20px;
@@ -284,7 +288,7 @@ body {
 }
 
 @media all and (max-width: 768px) {
-  .data-search-container {
+  .search-box {
     width: 100%;
     right: auto;
     padding: 0 30px;
